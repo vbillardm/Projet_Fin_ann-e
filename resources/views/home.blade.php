@@ -14,4 +14,7 @@
         </div>
     </div>
 </div>
+<a href="/room">join a public room</a></br>
+<a href="/room/private">join a private room</a></br>
+<a href="/room/private/create">create a private room</a>
 @endsection

@@ -8,10 +8,14 @@ use App\Http\Requests;
 
 class ProfileController extends Controller
 {
-    public function details($name)
+    public function details()
     {
-        $user = \App\User::where('name', $name)->get();
 
-        return view('profile.detail', compact('user'));
+        $user = \Auth::user();
+
+        $user_score = \App\Score::where("id_users", "=",\Auth::user()->id)->firstOrFail();
+        $user_song = \App\Song::where("id_users", "=",\Auth::user()->id)->get();
+
+        return view('profile.detail', compact('user', 'user_score', 'user_song'));
     }
 }
