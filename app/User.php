@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,16 +22,28 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function room()
     {
         return $this->belongsTo('App\Room');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function score()
     {
-        $this->hasOne('App\Score');
+        return $this->hasOne('App\Score');
     }
-    public function song()
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function songs()
     {
-        $this->hasMany('App\Song');
+        return $this->hasMany('App\Song');
     }
 }

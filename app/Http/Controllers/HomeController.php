@@ -25,18 +25,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        $user_id = \Auth::user()->id;
-
-        $user_score = \App\Score::where("id_users", "=" ,$user_id)->get();
-
-        if (\Auth::check() === true && ($user_score->isEmpty()))
-        {
-           // dd($user_score);
-           $score_user =  \App\Score::create(['id_users'=> $user_id, 'lvl_total'=>1, 'xp'=>1,'lvl_bass'=>1,'lvl_drum'=>1,'lvl_lead'=>1,'lvl_ambiance'=>1 ]);
-        }else{
-            return view('home');
+        $user = \Auth::user();
+        
+        if (\Auth::check() && $user->score()->isEmpty()) {
+           \App\Score::create([
+               'id_user'=> $user->id,
+               'lvl_total' => 1,
+               'xp' => 1,
+               'lvl_bass' => 1,
+               'lvl_drum' => 1,
+               'lvl_lead' => 1,
+               'lvl_ambiance' => 1
+           ]);
         }
+        
         return view('home');
     }
 

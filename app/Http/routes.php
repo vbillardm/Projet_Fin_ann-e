@@ -11,68 +11,69 @@
 |
 */
 
-Route::group(['middleware' => 'auth'], function () {
+Route::get('/', [
+    'as' => 'home', 'uses' => 'HomeController@index'
+]);
 
+Route::get('home', 'HomeController@index');
+
+Route::auth();
+
+Route::post('register', [
+    'as' => 'register', 'uses' => 'Auth\AuthController@register'
+]);
+
+Route::post('login', [
+    'as' => 'login', 'uses' => 'Auth\AuthController@login'
+]);
+
+Route::group(['middleware' => 'auth'], function () {
+    
     Route::get('room', [
         'as' => 'room', 'uses' => 'RoomController@joinRoom'
     ]);
 
-    Route::post('room/private', [
-        'as' => 'room/private', 'uses' => 'RoomController@createPrivateRoom'
-    ]);
-    Route::get('room/private', [
-        'as' => 'room/private', 'uses' => 'RoomController@joinPrivateRoom'
-    ]);
     Route::get('room/private/create', [
-        'as' => 'room/private', 'uses' => 'RoomController@createPrivateRoom'
+        'as' => 'form-private', 'uses' => 'RoomController@formPrivateRoom' // *
+    ]);
+    
+    Route::post('room/private/create', [
+        'as' => 'create-private', 'uses' => 'RoomController@createPrivateRoom'
+    ]);
+    
+    Route::get('room/private/join', [
+        'as' => 'join-private', 'uses' => 'RoomController@joinPrivateRoom'
     ]);
 
-    Route::post('room/select/private', [
-        'as' => 'select-private', 'uses' => 'RoomController@SelectPrivateRoom'
+    Route::post('room/private/select/', [
+        'as' => 'select-private', 'uses' => 'RoomController@selectPrivateRoom' // * méthode en minuscule
     ]);
+    
     Route::post('room/private/{slug}', [
-        'as' => 'room-private', 'uses' => 'RoomController@SelectedPrivateRoom'
+        'as' => 'room-private', 'uses' => 'RoomController@selectedPrivateRoom' // * méthode en minuscule
     ]);
 
-
-    Route::post('room/select/public', [
+    Route::get('room/public/{slug}', [
+        'as' => 'room-public', 'uses' => 'RoomController@selectedPublicRoom' // * nouvelle méthode
+    ]);
+    
+    Route::post('room/public/select', [
         'as' => 'select-public', 'uses' => 'RoomController@play'
     ]);
 
-    Route::get('room/{slug}/profile', [
-        'as' => 'room/{slug}/profile', 'uses' => 'RoomController@profile'
+    Route::get('room/profile/{slug}', [
+        'as' => 'room-profile', 'uses' => 'RoomController@profile'
     ]);
 
     Route::get('profile/{name}', [
         'as' => 'profile', 'uses' => 'ProfileController@details'
     ]);
-
+    
     Route::get('rank', [
-        'as' => 'rank', 'uses' => 'RankController@listage'
+        'as' => 'rank', 'uses' => 'RankController@rankingList'
     ]);
-
-
+    
     Route::get('credit', [
         'as' => 'credit', 'uses' => 'CreditController@show'
     ]);
-
-    }
-);
-
-
-Route::get('/', [
-    'as' => 'home', 'uses' => 'HomeController@index'
-]);
-
-Route::post('/register', [
-    'as' => 'register', 'uses' => 'Auth\AuthController@register'
-]);
-
-Route::post('/login', [
-    'as' => 'login', 'uses' => 'Auth\AuthController@login'
-]);
-
-
-Route::auth();
-
-Route::get('/home', 'HomeController@index');
+});

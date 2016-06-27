@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Auth;
-use App\Http\Controllers\Controller;
-
+use App\Http\Requests\SelectPrivateRequest;
+use App\Http\Requests\FindRoomRequest;
 
 class RoomController extends Controller
 {
-    public static function  createSlug($str)
+    /**
+     * @param $str
+     * @return mixed|string
+     */
+    protected function createSlug($str)
     {
         $slug = strtolower($str);
 
@@ -21,120 +25,105 @@ class RoomController extends Controller
 
         return $slug;
     }
+
+    /**
+     * @param int $len
+     * @return string
+     */
     protected function createName($len = 10)
     {
-        // function de création de name
-
-            $word = array_merge(range('a', 'z'), range('A', 'Z'));
-            shuffle($word);
-            return substr(implode($word), 0, $len);
-
+        $word = array_merge(range('a', 'z'), range('A', 'Z'));
+        shuffle($word);
+        
+        return substr(implode($word), 0, $len);
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function joinRoom()
     {
-        $user_id = \Auth::user()->id;
-        $user = \Auth::user();
-        $user_score = \App\Score::where("id_users", "=",$user_id)->firstOrFail();
-        $user_room=\App\Room::where("id_users", "=",$user_id)->firstOrFail();
-
-        return view('rooms.roomSelect', compact('user_score','user','user_room'));
+        return view('rooms.roomSelect');
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function joinPrivateRoom()
     {
-        $user_id = \Auth::user()->id;
-        $user = \Auth::user();
-        $user_room = \App\Room::where("id_users", "=",$user_id)->firstOrFail();
-
-        return view('rooms.roomPlayPrivate', compact('user_id','user','user_room'));
-
+        return view('rooms.roomPlayPrivate');
     }
-    public function createPrivateRoom()
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function createPrivateRoom(Request $request)
     {
-        if($_POST){
-            $user_id = \Auth::user()->id;
-            $user = \Auth::user();
-            $user_score = \App\Score::where("id_users", "=",$user_id)->firstOrFail();
-
-            $private = \App\Room::create(['name' => $_POST['name'], 'slug'=> $this->createSlug($this->createName()), 'public'=>'0', 'id_users'=>$user_id]);
-
-
-            return view('rooms.roomSelectPrivate',compact('user','user_score','private'));
-        }else{
-            return view('rooms.roomCreatePrivate');
-        }
-
+        $private = \App\Room::create([
+            'name' => $request->input('name'),
+            'slug' => $this->createSlug($this->createName()),
+            'public' => 0,
+            'id_users' => \Auth::user()->id
+        ]);
+        
+        return view('rooms.roomSelectPrivate',compact('private'));
     }
-    public function SelectPrivateRoom()
+
+    /**
+     * @param SelectPrivateRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function selectPrivateRoom(SelectPrivateRequest $request)
     {
-        // choix des roles dans la private room
-        // renvois vers la page de jeu !
-
-        if($_POST['slug']!= null){
-            $user_id = \Auth::user()->id;
-            $user = \Auth::user();
-            $slug = $_POST['slug'];
-            $user_room = \App\Room::where('slug',$slug)->firstOrfail();
-            // redirect to au lieu de views, pr l'url boloss
-            return redirect()->route('room-private',['slug' => $slug]);
-
-        }else{
-            return view('rooms.roomPlayPrivate');
-        }
+        return redirect()->route('room-private', ['slug' => $request->input('slug')]);
     }
-    public function SelectedPrivateRoom()
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function selectedPrivateRoom()
     {
         return view('rooms.roomSelectprivate');
     }
-    public function play()
+
+    /**
+     * @param FindRoomRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function play(FindRoomRequest $request)
     {
-        // récuperer les données, pour générer la page de play en fonction de l'algorithme de tri
-        // en POST et en fonction des roles de chacun !
-
-        $user_id = \Auth::user()->id;
-        $user = \Auth::user();
-
-        $choix1 = $_POST['choix1'];
-        $choix2 = $_POST['choix2'];
-
-     //   dd($choix1,$choix2);
-      //  die();
-
-        $rooms = \App\Room::where('public',1)->get();
-
-        foreach($rooms as $room)
-        {
-
-            //dd($room->$choix1,$choix1,$user_id,$room->lead,$room,$rooms);
-
-            if(($room->$choix1) === null)
-            {
-                $room->update([$choix1 => $user_id]) ;
-                $user_room = \App\Room::where("id_users", "=",$user_id)->firstOrFail();
-               // dd($room->$choix1,$choix1,$user_id,$room->lead,$room,$rooms);
-                return redirect()->route('room-private',['slug' => $slug]);
-                return view('rooms.roomPlay',compact('user_room'));
-
-            }
-
-            elseif($room->$choix2 === null)
-            {
-                $room->update([$choix2 => $user_id]);
-                $user_room = \App\Room::where("id_users", "=",$user_id)->firstOrFail();
-                //dd($room->$choix2,$choix2,$user_id,$room->lead,$room,$rooms);
-
-                return view('rooms.roomPlay',compact('user_room'));
-            }
+        $room = \App\Room::where('public', '=', 1)
+            ->where($request->input('choix1'), null)
+            ->orWhere($request->input('choix2'), null)
+            ->first();
+        
+        if (!$room) {
+            $room = \App\Room::create([
+                'name' => $this->createName(),
+                'slug' => $this->createSlug($this->createName()),
+                'public' => 1,
+                $request->input('choix1') => \Auth::user()->id,
+                'id_users' => \Auth::user()->id
+            ]);
         }
-         $room =  \App\Room::create(['name' => $this->createName(), 'slug'=> $this->createSlug($this->createName()), 'public'=>'1', 'id_users'=>$user_id]);
-        $room->update([$choix1 => $user_id]) ;
-        $user_room = \App\Room::where("id_users", "=",$user_id)->firstOrFail();
-
-        return view('rooms.roomPlay',compact('user_room'));
+        
+        return redirect()->route('room-public', [
+            'slug' => $room->slug
+        ]);
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function routePlay()
     {
         return  view('rooms.roomPlay',compact('user_room'));
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function profile()
     {
         $user_id = \Auth::user()->id;

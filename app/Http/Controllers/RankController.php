@@ -9,10 +9,10 @@ use App\Http\Requests;
 
 class RankController extends Controller
 {
-    public function listage()
+    public function rankingList()
     {
-        $all = \App\User::all();
+        $songs = \App\Song::orderBy('score')->limit(10)->get();
 
-        return view('rank.list', compact('all'));
+        return view('rank.list', compact('songs'));
     }
 }
