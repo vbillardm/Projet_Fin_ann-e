@@ -252,3 +252,13 @@ function dynamicBarScore() {
 
 }
 dynamicBarScore();
+
+function notify(text){
+  var audioElement = document.createElement('audio');
+  audioElement.setAttribute('src', 'sound/connexion.mp3');
+  audioElement.setAttribute('autoplay', 'autoplay');
+  audioElement.play();
+  $('.notif').text(text);
+  $('.notif').animate({ marginTop: '0'}, 2000).delay( 6000 ).animate({ marginTop: '-20%'}, 6000);
+
+}
