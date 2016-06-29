@@ -8,9 +8,24 @@ body {
 }
 
 a {
+    color: #fff;
     text-decoration: none;
 }
-
+input[type=submit],
+button{
+    font-size: 16px;
+    cursor: pointer;
+    color:#fff;
+    font-weight: 300;
+}
+button img{
+    margin-right: 7px;
+    width: 18px;
+    height: 18px;
+}
+button:hover{
+    background-color: #333333;
+}
 span{
     font-weight: 500;
 }
@@ -50,7 +65,12 @@ h3{
     margin-top: 15px;
     margin-bottom: 15px;
 }
-
+::selection {
+    background: #0e0e0e; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+    background: #0e0e0e; /* Gecko Browsers */
+}
 /* --- Scrollbar --*/ 
 ::-webkit-scrollbar {
     width: 8px;
@@ -98,6 +118,8 @@ h3{
 .sidebar nav {
     margin-top: 20vh;
     color: #fff;
+    z-index: 1;
+    background-color: #0e0e0e;
 }
 
 .sidebar nav ul {
@@ -106,7 +128,27 @@ h3{
     transition-duration: 0.5s;
     margin-bottom: 50px;
 }
+.sidebar nav ul li ul {
+    display: none;
+    background-color: #0e0e0e;
+    margin-top: -4vh;
+    margin-left: -5vw;
+    position: fixed;
+    padding: 5px;
+    height: 90px;
+    width: 22%;
+    z-index: -2;
+    transition-duration: 2s;
 
+}
+.sidebar nav ul li ul li:hover {
+    border-right: solid #fff;
+}
+
+.sidebar nav ul li:hover > ul{
+    display: block;
+    transition-duration: 2s;
+}
 .sidebar nav ul .active {
     -moz-box-shadow: 12px 0 15px -10px #2dff9f;
     -webkit-box-shadow: 12px 0 15px -10px #2dff9f;
@@ -129,7 +171,15 @@ h3{
     text-align: center;
     margin: 0 auto 30px;
 }
-
+.sidebar nav ul li ul li{
+    text-align: right;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    min-height: 40px;
+    border-right: none;
+    vertical-align: middle;
+    margin: 0;
+}
 .sidebar nav ul li a {
     text-decoration: none;
     color: #ffffff;
@@ -197,7 +247,7 @@ h3{
     background-color: transparent;
     border-radius: 10px;
     width: 120px;
-    height: 30px;
+    height: 43px;
     color: #fff;
     border: solid #fff 2px;
     margin-top: 25px;
@@ -271,36 +321,44 @@ h3{
     margin: auto;
     width: 60%;
 }
-
+.content__selection--role{
+    margin-bottom: 5vh;
+}
 .content__selection--role ul li:hover {
-    -moz-box-shadow: 0 0 25px -5px #2dff9f;
-    -webkit-box-shadow: 0 0 25px -5px #2dff9f;
-    -o-box-shadow: 0 0 25px -5px #2dff9f;
-    box-shadow: 0 0 25px -5px #2dff9f;
-    filter: progid: DXImageTransform.Microsoft.Shadow(color=#2dff9f, Direction=NaN, Strength=25);
+    -moz-box-shadow: 0 0 25px -5px #52ffb2;
+    -webkit-box-shadow: 0 0 25px -5px #52ffb2;
+    -o-box-shadow: 0 0 25px -5px #52ffb2;
+    box-shadow: 0 0 25px -5px #52ffb2;
+    filter: progid: DXImageTransform.Microsoft.Shadow(color=#52ffb2, Direction=NaN, Strength=25);
     transition-duration: 0.5s;
 }
 
-.content__selection--role,
-.content__selection--action {
-    width: 89%;
+.content__selection--role .active {
+    -moz-box-shadow: 0 0 25px -5px #06ff8a;
+    -webkit-box-shadow: 0 0 25px -5px #06ff8a;
+    -o-box-shadow: 0 0 25px -5px #06ff8a;
+    box-shadow: 0 0 25px -5px #06ff8a;
+    filter: progid: DXImageTransform.Microsoft.Shadow(color=#06ff8a, Direction=NaN, Strength=25);
 }
 
 .content__selection--role ul li {
-    width: 200px;
-    height: 200px;
+    width: 13vw;
+    height: 23vh;
     background-color: #0e0e0e;
     display: inline-block;
     margin: 12px;
     transition-duration: 0.5s;
     border-radius: 7px;
 }
+.content__selection--role ul li:last-child{
+    margin-right: 0px;
+}
 
 .content__selection--role ul li p {
     text-decoration: none;
     color: #ffffff;
     text-align: center;
-    margin-top: 92px;
+    margin-top: 11vh;
 }
 
 .content__selection--action button {
@@ -308,7 +366,6 @@ h3{
     -moz-border-radius: 0;
     border-radius: 3px;
     border: none;
-    font-size: 18px;
     background: #0e0e0e;
     padding: 10px 20px 10px 20px;
     text-decoration: none;
@@ -322,7 +379,7 @@ h3{
 
 .content__code input {
     margin-left: 20%;
-    display: block;
+    display: inline-block;
     background-color: transparent;
     border: none;
     border-bottom: solid #fff 2px;
@@ -337,6 +394,8 @@ h3{
 
 .content__code {
     font-size: 3em;
+    display: inline-block;
+    margin-left: 13%;
 }
 
 .content__join {
@@ -349,30 +408,44 @@ h3{
     -moz-border-radius: 0;
     border-radius: 3px;
     border: none;
-    font-size: 18px;
     background: #0e0e0e;
     padding: 10px 20px 10px 20px;
     text-decoration: none;
-    margin-left: 6%;
-    margin-right: 2%;
-    margin-top: 185px;
+    margin :7vh 0 0 8%;
 }
+
 
 .content__join button a {
     color: #ffffff;
 }
-
+.content__create {
+    display: inline;
+}
 .content__create button {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 3px;
     border: none;
-    font-size: 18px;
     background: #0e0e0e;
     padding: 10px 20px 10px 20px;
     text-decoration: none;
-    margin-left: 56%;
     position: absolute;
+    margin-left: 17%;
+    margin-top: 14vh;
+}
+
+.content__player button{
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 3px;
+    border: none;
+    background: #0e0e0e;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    position: relative;
+    margin-right: 25px;
+    display: inline-block;
+    margin-top: 5vh;
 }
 
 .content__create button a {
@@ -390,6 +463,9 @@ h3{
     margin-left: -0.9%;
     display: inline-block;
 
+}
+.content__experience{
+    margin-bottom: 7vh;
 }
 .content__experience ul li {
     height: 30px;

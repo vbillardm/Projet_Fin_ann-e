@@ -262,3 +262,17 @@ function notify(text){
   $('.notif').animate({ marginTop: '0'}, 2000).delay( 6000 ).animate({ marginTop: '-20%'}, 6000);
 
 }
+
+function timer(){
+
+
+  for ( var i = 40; i > 0; i--){
+    var value1 = 'Temps restant ';
+
+    var value = '0:'+i;
+    $('.content__user--timer .active p').text(value1 + value).delay;
+  }
+
+
+}
+timer();
