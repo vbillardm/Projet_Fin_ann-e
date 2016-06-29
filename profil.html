@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sandsound</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <canvas id="canvas" class="background"></canvas>
+
+    <!-- Ne s'affiche que si sur mobile :) -->
+    <div class="mobile">
+        <a href="index.html"><img class="logo" src="css/img/logo.png" alt="SandSound"></a>
+        <p>Pour profiter de l'expérience SandSound, rendez-vous sur une tablette ou desktop !</p>
+    </div>
+
+
+    <div class="sidebar">
+        <a href="index.html"><img class="logo" src="css/img/logo.png" alt="SandSound"></a>
+
+        <nav>
+            <ul>
+                <li class="active"><a href="profil.html">Profil</a></li>
+                <li><a href="join.html">Rejoindre un salon</a></li>
+                <li><a href="privé.html">Nouveau salon</a></li>
+                <li><a href="classement.html">Classement</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+        <div class="content__infos">
+            <ul>
+                <li class="content__infos--pseudo">Wladouche</li>
+                <li class="content__infos--pts">12<span> pts </span></li>
+                <li class="content__infos--niv"><span>Niv :</span> 85</li>
+            </ul>
+        </div>
+        <div class="content__title">
+            <h1>Wladouche</h1>
+            <div class="content__title--intro">
+                <p>Wladouche est niveau <span>85</span>.</p>
+            </div>
+            <div class="content__title--explain">
+                <p>
+                    Découvrez les dernières musiques de <span>Wladouche</span>.
+
+                </p>
+            </div>
+            <div class="content__experiencepre">
+                <ul>
+                    <li class="content__experiencepre--bass">| Bass :  <span>22</span></li>
+                    <li class="content__experiencepre--pads">| Pads :  <span>15</span></li>
+                    <li class="content__experiencepre--drum">| Drum :  <span>15</span></li>
+                    <li class="content__experiencepre--lead">| Lead :  <span>21</span></li>
+                </ul>
+            </div>
+            <div class="content__experience">
+                <ul>
+                    <li class="content__experience--bass"></li>
+                    <li class="content__experience--pads"></li>
+                    <li class="content__experience--drum"></li>
+                    <li class="content__experience--lead"></li>
+                </ul>
+            </div>
+    </div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
