@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
 
     Route::get('room/private/create', [
-        'as' => 'form-private', 'uses' => 'RoomController@formPrivateRoom' // *
+        'as' => 'form-private', 'uses' => 'RoomController@formPrivateRoom'
     ]);
     
     Route::post('room/private/create', [
@@ -46,18 +46,18 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
 
     Route::post('room/private/select/', [
-        'as' => 'select-private', 'uses' => 'RoomController@selectPrivateRoom' // * méthode en minuscule
+        'as' => 'select-private', 'uses' => 'RoomController@selectPrivateRoom'
     ]);
     
     Route::get('room/private/{slug}', [
-        'as' => 'room-private', 'uses' => 'RoomController@selectedPrivateRoom' // * méthode en minuscule
+        'as' => 'room-private', 'uses' => 'RoomController@selectedPrivateRoom'
     ]);
     Route::post('room/private/{slug}', [
-        'as' => 'room-private', 'uses' => 'RoomController@selectedPrivateRoom' // * méthode en minuscule
+        'as' => 'room-private', 'uses' => 'RoomController@selectedPrivateRoom'
     ]);
 
     Route::get('room/public/{slug}', [
-        'as' => 'room-public', 'uses' => 'RoomController@selectedPublicRoom' // * nouvelle méthode
+        'as' => 'room-public', 'uses' => 'RoomController@selectedPublicRoom'
     ]);
     
     Route::post('room/public/select', [
@@ -87,3 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'xp', 'uses' => 'XpController@gain'
     ]);
 });
+
+Route::get('api/samples', [
+    'as' => 'samples', 'uses' => 'APIController@samples'
+]);

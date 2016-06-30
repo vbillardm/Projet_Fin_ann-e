@@ -13,8 +13,8 @@ class UpdateUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function($table){
-            $table->text('sample');
-            $table->text('email');
+            $table->json('samples');
+            $table->string('email');
         });
     }
 

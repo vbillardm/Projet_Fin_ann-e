@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 
 class APIController extends Controller
@@ -44,8 +43,10 @@ class APIController extends Controller
         // réponse au JS ==> envois des samples
         // $request->session()->put('users', '1, 4, 5, 6');
     }
-    public function récupSample() {
-        // récup des samples !
+    public function samples() {
+        $samples = \App\Sample::all();
+        
+        return response()->json($samples);
     }
     public function redirection() {
         // envois de l'url de redirection

@@ -13,7 +13,7 @@ class CorrectScoresTable extends Migration
     public function up()
     {
         Schema::table('scores', function (Blueprint $table) {
-            $table->renameColumn('id_users', 'id_user');
+            $table->renameColumn('id_users', 'user_id');
         });
     }
 
@@ -25,7 +25,7 @@ class CorrectScoresTable extends Migration
     public function down()
     {
         Schema::table('scores', function($table) {
-            $table->renameColumn('id_user', 'id_users');
+            $table->renameColumn('user_id', 'id_users');
         });
     }
 }
