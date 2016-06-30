@@ -43,7 +43,22 @@ class RoomController extends Controller
      */
     public function joinRoom()
     {
-        return view('rooms.roomSelect');
+        $user = \Auth::user();
+
+        if (\Auth::check() && ($user->score)==null) {
+            \App\Score::create([
+                'user_id' => $user->id,
+                'lvl_total' => 1,
+                'xp' => 1,
+                'lvl_bass' => 1,
+                'lvl_drum' => 1,
+                'lvl_lead' => 1,
+                'lvl_ambiance' => 1,
+                'room_id' => 1
+            ]);
+        }
+
+        return view('rooms.roomSelect', compact('user'));
     }
 
     /**
@@ -51,7 +66,9 @@ class RoomController extends Controller
      */
     public function joinPrivateRoom()
     {
-        return view('rooms.roomPlayPrivate');
+        $user = \Auth::user();
+
+        return view('rooms.roomPlayPrivate', compact('user'));
     }
 
     /**
@@ -109,23 +126,38 @@ class RoomController extends Controller
      */
     public function play(FindRoomRequest $request)
     {
+        $categories = ['bass', 'drum', 'lead', 'ambiance'];
+
+        $choices = ['', ''];
+
+        $choices[0] = $request->input('choix1');
+        $choices[1] = $request->input('choix2');
+
+        do {
+            for ($i = 0; $i < count($choices); $i++) {
+                if ($choices[$i] == null || $choices[0] == $choices[1]) {
+                    $choices[$i] = $categories[rand(0, 3)];
+                }
+            }
+        } while ($choices[0] == $choices[1]);
+
         $room = \App\Room::where('public', 1)
-            ->where($request->input('choix1'), null)
-            ->orWhere($request->input('choix2'), null)
+            ->where($choices[0], null)
+            ->orWhere($choices[1], null)
             ->first();
         if (!$room) {
             $room = \App\Room::create([
                 'name' => $this->createName(),
                 'slug' => $this->createSlug($this->createName()),
                 'public' => 1,
-                $request->input('choix1') => \Auth::user()->id,
+                $choices[0] => \Auth::user()->id,
                 'id_users' => \Auth::user()->id
             ]);
         } else {
-            if ($room->{$request->input('choix1')} === NULL) {
-                $room->{$request->input('choix1')} = \Auth::user()->id;
+            if ($room->{$choices[0]} === NULL) {
+                $room->{$choices[0]} = \Auth::user()->id;
             } else {
-                $room->{$request->input('choix2')} = \Auth::user()->id;
+                $room->{$choices[1]} = \Auth::user()->id;
             }
 
              $room->save();

@@ -15,8 +15,11 @@ class ProfileController extends Controller
     {
         $user = \App\User::where('name', '=', $name)
             ->first();
+
+        $songs = \App\Song::where('id_users', 'LIKE', $user->id)->get();
+
         if ($user != NULL) {
-            return view('profile.detail', compact('user'));
+            return view('profile.detail', compact('user', 'songs'));
         } else {
             return redirect()->route('home');
         }

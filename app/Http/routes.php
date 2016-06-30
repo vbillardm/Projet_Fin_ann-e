@@ -55,13 +55,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('room/private/{slug}', [
         'as' => 'room-private', 'uses' => 'RoomController@selectedPrivateRoom'
     ]);
+    
+    Route::get('room/public/select', [
+        'as' => 'select-public', 'uses' => 'RoomController@play'
+    ]);
 
     Route::get('room/public/{slug}', [
         'as' => 'room-public', 'uses' => 'RoomController@selectedPublicRoom'
-    ]);
-    
-    Route::post('room/public/select', [
-        'as' => 'select-public', 'uses' => 'RoomController@play'
     ]);
 
     Route::get('room/public/profile/{slug}', [

@@ -24,8 +24,8 @@ class FindRoomRequest extends Request
     public function rules()
     {
         return [
-            'choix1' => 'required',
-            'choix2' => 'required'
+            'choix1' => '',
+            'choix2' => ''
         ];
     }
 }

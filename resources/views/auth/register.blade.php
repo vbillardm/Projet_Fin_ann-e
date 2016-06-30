@@ -1,82 +1,58 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Inscription | Sandsound</title>
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body>
+        <canvas id="canvas" class="background"></canvas>
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-                        {{ csrf_field() }}
+        <!-- Ne s'affiche que si sur mobile :) -->
+        <div class="mobile">
+            <a href="/"><img class="logo" src="/css/img/logo.png" alt="SandSound"></a>
+            <p>Pour profiter de l'expérience SandSound, rendez-vous sur une tablette ou desktop !</p>
+        </div>
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+        <div class="sidebar">
+            <a href="/"><img class="logo" src="/css/img/logo.png" alt="SandSound"></a>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i> Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <nav>
+                <ul>
+                    @if (Auth::check())
+                        <li>{{ link_to('profile', 'Profil') }}</li>
+                        <li>{{ link_to('room', 'Rejoindre un salon') }}</li>
+                        <li>{{ link_to('form.private', 'Nouveau salon') }}</li>
+                        <li>{{ link_to('rank', 'Classement') }}</li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
+        <div class="content">
+            <div class="content__infos">
+                @if (Auth::check())
+                    <ul>
+                        <li class="content__infos--pseudo">{{ $user->name }}</li>
+                        <li class="content__infos--pts">{{ $user->score->xp }}<span> pts </span></li>
+                        <li class="content__infos--niv"><span>Niv :</span> {{ $user->score->lvl_total }}</li>
+                    </ul>
+                @endif
+            </div>
+            <div class="login">
+                <form action="/register" method="post">
+                    {!! csrf_field() !!}
+                    <input type="text" placeholder="Username" class="login__user" name="name">
+                    <input type="email" placeholder="Email" class="login__user" name="email">
+                    <input type="password" placeholder="Mot de passe" class="login__password" name="password">
+                    <input type="password" placeholder="Retappez mot de passe" class="login__password" name="password_confirmation">
+                    <input type="submit" value="Inscription" class="login__btn">
+                    {{ link_to('login', 'Connexion', ['class' => 'underline']) }}
+                </form>
             </div>
         </div>
-    </div>
-</div>
-@endsection
+
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <script src="/js/index.js"></script>
+    </body>
+</html>

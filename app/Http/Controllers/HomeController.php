@@ -16,6 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = \Auth::user();
+
         if (\Auth::check() && ($user->score)==null) {
            \App\Score::create([
                'user_id'=> $user->id,
@@ -28,8 +29,12 @@ class HomeController extends Controller
                'room_id' => 1
            ]);
         }
-        
-        return view('home');
+
+        if (\Auth::check()) {
+            return redirect('/room');
+        }
+
+        return view('home', compact('user'));
     }
 
 }

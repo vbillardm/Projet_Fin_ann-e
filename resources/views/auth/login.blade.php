@@ -1,66 +1,57 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion | Sandsound</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<canvas id="canvas" class="background"></canvas>
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {{ csrf_field() }}
+<!-- Ne s'affiche que si sur mobile :) -->
+<div class="mobile">
+    <a href="/"><img class="logo" src="/css/img/logo.png" alt="SandSound"></a>
+    <p>Pour profiter de l'expérience SandSound, rendez-vous sur une tablette ou desktop !</p>
+</div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+<div class="sidebar">
+    <a href="/"><img class="logo" src="/css/img/logo.png" alt="SandSound"></a>
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i> Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <nav>
+        <ul>
+            @if (Auth::check())
+                <li>{{ link_to('profile', 'Profil') }}</li>
+                <li>{{ link_to('room', 'Rejoindre un salon') }}</li>
+                <li>{{ link_to('form-private', 'Nouveau salon') }}</li>
+                <li>{{ link_to('rank', 'Classement') }}</li>
+            @endif
+        </ul>
+    </nav>
+</div>
+<div class="content">
+    <div class="content__infos">
+        @if (Auth::check())
+            <ul>
+                <li class="content__infos--pseudo">{{ $user->name }}</li>
+                <li class="content__infos--pts">{{ $user->score->xp }}<span> pts </span></li>
+                <li class="content__infos--niv"><span>Niv :</span> {{ $user->score->lvl_total }}</li>
+            </ul>
+        @endif
+    </div>
+    <div class="login">
+        <form action="/login" method="post">
+            {!! csrf_field() !!}
+            <input type="email" placeholder="Email" class="login__user" name="email">
+            <input type="password" placeholder="Mot de passe" class="login__password" name="password">
+            <input type="submit" value="Connexion" class="login__btn">
+            {{ link_to('register', 'Inscription', ['class' => 'underline']) }}
+        </form>
     </div>
 </div>
-@endsection
+
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="/js/index.js"></script>
+</body>
+</html>

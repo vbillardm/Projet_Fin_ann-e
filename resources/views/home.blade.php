@@ -3,29 +3,29 @@
     <head>
         <meta charset="UTF-8">
         <title>Sandsound</title>
-        <link rel="stylesheet" href="css/reset.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/style.css">
     </head>
     <body>
         <canvas id="canvas" class="background"></canvas>
 
         <!-- Ne s'affiche que si sur mobile :) -->
         <div class="mobile">
-            <a href="{{ link_to('home') }}"><img class="logo" src="css/img/logo.png" alt="SandSound"></a>
+            <a href="/"><img class="logo" src="/css/img/logo.png" alt="SandSound"></a>
             <p>Pour profiter de l'expérience SandSound, rendez-vous sur une tablette ou desktop !</p>
         </div>
 
 
         <div class="sidebar">
-            <a href="#"><img class="logo" src="css/img/logo.png" alt="SandSound"></a>
+            <a href="/"><img class="logo" src="/css/img/logo.png" alt="SandSound"></a>
 
             <nav>
                 <ul>
                     @if (Auth::check())
-                        <li><a href="profil.html">Profil</a></li>
-                        <li><a href="partie.html">Rejoindre un salon</a></li>
-                        <li><a href="privé.html">Nouveau salon</a></li>
-                        <li><a href="classement.html">Classement</a></li>
+                        <li><a href="{{ route('profile', ['name' => $user->name]) }}">Profil</a></li>
+                        <li class="active">{{ link_to_route('room', 'Rejoindre un salon') }}</li>
+                        <li>{{ link_to_route('join-private', 'Nouveau salon') }}</li>
+                        <li>{{ link_to_route('rank', 'Classement') }}</li>
                     @endif
                 </ul>
             </nav>
@@ -41,10 +41,10 @@
                 @endif
             </div>
             <div class="login">
-                <form action="">
+                <form action="/login" method="post">
                     {!! csrf_field() !!}
-                    <input type="email" placeholder="Email" class="login__user">
-                    <input type="password" placeholder="Mot de passe" class="login__password">
+                    <input type="email" placeholder="Email" class="login__user" name="email">
+                    <input type="password" placeholder="Mot de passe" class="login__password" name="password">
                     <input type="submit" value="Connexion" class="login__btn">
                     {{ link_to('register', 'Inscription', ['class' => 'underline']) }}
                 </form>
