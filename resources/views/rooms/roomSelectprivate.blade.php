@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Sandsound</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/style.css">
+
 </head>
+
 <body>
+
 <canvas id="canvas" class="background"></canvas>
 
 <!-- Ne s'affiche que si sur mobile :) -->
@@ -14,6 +18,7 @@
     <a href="/"><img class="logo" src="/css/img/logo.png" alt="SandSound"></a>
     <p>Pour profiter de l'expérience SandSound, rendez-vous sur une tablette ou desktop !</p>
 </div>
+
 
 <div class="sidebar">
     <a href="/"><img class="logo" src="/css/img/logo.png" alt="SandSound"></a>
@@ -27,7 +32,6 @@
         </ul>
     </nav>
 </div>
-<div class="notif">Voté !</div>
 <div class="content">
     <div class="content__infos">
         <ul>
@@ -37,26 +41,33 @@
         </ul>
     </div>
     <div class="content__title">
-        <h1>| Rejoindre un salon privé</h1>
+        <h1>| Room privé</h1>
         <div class="content__title--intro">
-            <p>Pour rejoindre le salon d’un ami, entrez simplement le code de page que vous avez reçu.</p>
+            <p>Créer et gérer votre room.</p>
         </div>
         <div class="content__title--explain">
             <p>
-                Ce code est composé de 6 lettres ou chiffres, entrez le ci-dessous :
+                Entrer le nom de votre salon.
             </p>
         </div>
     </div>
-    <div class="content__code">
-        <input type="text" placeholder="Votre code" >
-    </div>
-    <div class="content__join">
-        <button type="button"><a href="">Annuler</a></button>
-        <button type="button" class="right"><a href="recherche.html">Jouer</a></button>
+    <form class="content__code" method="/room/private/create" method="post">
+        <input type="text" placeholder="Nom de room" name="name">
+        <input type="submit" style="display:none" class="submit-form">
+    </form>
+    <div class="content__create">
+        <a href="" class="create"><button type="button"><img src="/css/img/create.png" alt="">Créer</button></a>
     </div>
 </div>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src="/js/index.js"></script>
+<script>
+    document.querySelector('.create').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        document.querySelector('.submit-form').click();
+    });
+</script>
 </body>
 
 </html>

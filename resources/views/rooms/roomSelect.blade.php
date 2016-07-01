@@ -22,7 +22,7 @@
         <ul>
             <li><a href="{{ route('profile', ['name' => $user->name]) }}">Profil</a></li>
             <li class="active">{{ link_to_route('room', 'Rejoindre un salon') }}</li>
-            <li>{{ link_to_route('join-private', 'Nouveau salon') }}</li>
+            <li>{{ link_to_route('form-private', 'Nouveau salon') }}</li>
             <li>{{ link_to_route('rank', 'Classement') }}</li>
         </ul>
     </nav>

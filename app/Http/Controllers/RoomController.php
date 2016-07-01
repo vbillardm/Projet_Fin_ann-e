@@ -117,7 +117,9 @@ class RoomController extends Controller
      */
     public function formPrivateRoom()
     {
-        return view('rooms.roomCreatePrivate');
+        $user = \Auth::user();
+
+        return view('rooms.roomCreatePrivate', compact('user'));
     }
 
     /**
@@ -163,8 +165,8 @@ class RoomController extends Controller
              $room->save();
         }
 
-            \Auth::user()->room_id = $room->id;
-            \Auth::user()->save();
+        \Auth::user()->room_id = $room->id;
+        \Auth::user()->save();
 
         return redirect()->route('room-public', [
             'slug' => $room->slug
@@ -184,7 +186,33 @@ class RoomController extends Controller
      */
     public function selectedPublicRoom()
     {
-        return  view('rooms.roomPublicPlay');
+        $user = \App\User::with('score', 'room')->find(\Auth::user()->id);
+        $role = 0;
+        
+        $users = [];
+        $users[0] = \App\User::find($user->room->bass);
+        $users[1] = \App\User::find($user->room->drum);
+        $users[2] = \App\User::find($user->room->lead);
+        $users[3] = \App\User::find($user->room->ambiance);
+
+        switch ($user->id) {
+            case $user->room->bass:
+                $role = 0;
+                break;
+            case $user->room->drum:
+                $role = 1;
+                break;
+            case $user->room->lead:
+                $role = 2;
+                break;
+            case $user->room->ambiance:
+                $role = 3;
+                break;
+            default:
+                break;
+        }
+
+        return  view('rooms.roomPublicPlay', compact('user', 'role', 'users'));
     }
 
     /**

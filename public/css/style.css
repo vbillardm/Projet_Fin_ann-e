@@ -7,6 +7,9 @@ body {
     letter-spacing: 0.15em;
 }
 
+.selector{
+    background-color: rgba(255, 255, 255, 0.2);
+}
 a {
     color: #fff;
     text-decoration: none;
@@ -512,14 +515,15 @@ h3{
     display: inline;
 
 }
-.content__user--sample ul li{
+ .samplette {
     display: inline-block;
-    width: 75px;
-    height: 75px;
+    width: 76px;
+     float: left;
+    height: 76px;
     margin: 10px 10px;
     border-radius: 3px;
     color: #000000;
-    font-size: 14px;
+    font-size: 10px;
     padding: 3px;
     box-sizing: border-box;
     text-align: center;
@@ -654,16 +658,16 @@ h3{
 
 .content__partitions{
     margin-top: 5%;
-    margin-left: 10%;
+    margin-left: 18%;
     width: 100%;
 }
 
 .content__partitions table{
-    float: left;
+    width: 1064px;
 }
 
-
-.content__partitions td{
+.content__partitions td {
+    z-index: 8;
     border-left: none;
     border-right: none;
     border-bottom: solid 1px;
@@ -672,6 +676,7 @@ h3{
     width: 75px;!important;
     height: 75px;!important;
 }
+
 .content__infos{
     font-size: 14px;
     position: fixed;

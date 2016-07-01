@@ -12,7 +12,8 @@ class RankController extends Controller
     public function rankingList()
     {
         $songs = \App\Song::orderBy('score')->limit(10)->get();
-
-        return view('rank.list', compact('songs'));
+        $user = \Auth::user();
+        
+        return view('rank.list', compact('songs', 'user'));
     }
 }
