@@ -26,8 +26,8 @@
     <nav>
         <ul>
             <li><a href="{{ route('profile', ['name' => $user->name]) }}">Profil</a></li>
-            <li class="active">{{ link_to_route('room', 'Rejoindre un salon') }}</li>
-            <li>{{ link_to_route('form-private', 'Nouveau salon') }}</li>
+            <li>{{ link_to_route('room', 'Rejoindre un salon') }}</li>
+            <li class="active">{{ link_to_route('form-private', 'Nouveau salon') }}</li>
             <li>{{ link_to_route('rank', 'Classement') }}</li>
         </ul>
     </nav>
@@ -51,7 +51,7 @@
             </p>
         </div>
     </div>
-    <form class="content__code" method="/room/private/create" method="POST">
+    <form class="content__code" action="/room/private/create" method="post">
         <input type="text" placeholder="Nom de room" name="name">
         <input type="submit" style="display:none" class="submit-form">
     </form>

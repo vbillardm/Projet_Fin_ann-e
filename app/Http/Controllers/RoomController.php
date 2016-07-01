@@ -45,7 +45,7 @@ class RoomController extends Controller
     {
         $user = \Auth::user();
 
-        if (\Auth::check() && ($user->score)==null) {
+        if (\Auth::check() && ($user->score()) == null) {
             \App\Score::create([
                 'user_id' => $user->id,
                 'lvl_total' => 1,
@@ -223,3 +223,4 @@ class RoomController extends Controller
         return view('rooms.roomProfile', compact('user_room'));
     }
 }
+

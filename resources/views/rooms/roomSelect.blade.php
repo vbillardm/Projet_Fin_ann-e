@@ -32,8 +32,8 @@
     <div class="content__infos">
         <ul>
             <li class="content__infos--pseudo">{{ $user->name }}</li>
-            <li class="content__infos--pts">{{ $user->score->xp }}<span> pts </span></li>
-            <li class="content__infos--niv"><span>Niv :</span> {{ $user->score->lvl_total }}</li>
+            <li class="content__infos--pts">{{ 1 }}<span> pts </span></li>
+            <li class="content__infos--niv"><span>Niv :</span> {{ 1 }}</li>
         </ul>
     </div>
     <div class="content__title">
@@ -128,3 +128,4 @@
 </script>
 </body>
 </html>
+

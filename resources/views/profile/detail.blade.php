@@ -42,7 +42,7 @@
     <div class="content__title">
         <h1>|   {{ $user->name }}</h1>
         <div class="content__title--intro">
-            <p>Wladouche est niveau <span>{{ $user->score->lvl_total }}</span>.</p>
+            <p>{{ $user->name }} est niveau <span>{{ $user->score->lvl_total }}</span>.</p>
         </div>
         <div class="content__title--explain">
             <p>
@@ -89,7 +89,8 @@
         @endif
     </div>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="js/index.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 
 </html>
+
