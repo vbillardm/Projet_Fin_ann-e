@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+table {
+    border: 1px solid black;
+}
+
+td {
+    width: 140px;
+    height: 100px;
+    border: 2px solid blue;
+}
+
+td.filled {
+    background-color: green;
+    font-size: 22px;
+}
+
+.sample {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+ul > .sample {
+    display: inline-block;
+}
